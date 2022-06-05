@@ -33,7 +33,8 @@
   </style>
   <body>
     <div class="box">
-      <div>
+      <div style="color: gray" id="score">分数：0</div>
+      <div style="margin-top: 30px">
         <input type="text" placeholder="请输入…" id="typeBox" />
         <span onclick="type()" style="margin-left: 3px">确定</span>
       </div>
@@ -52,15 +53,13 @@
       return Math.floor(Math.random() * (max - min)) + min;
     }
     let chengYu = "";
+    let score = -1;
     function type() {
       let typeBox = document.getElementById("typeBox").value;
       if (typeBox == "" || typeBox == null || typeBox.length != 4) {
         document.getElementById("log").innerHTML = "格式错误，请重新输入…";
       } else {
-        if (
-          cnchar.idiom([typeBox[0], typeBox[1], typeBox[2], typeBox[3]])
-            .length == 0
-        ) {
+        if (cnchar.idiom(typeBox).length == 0) {
           document.getElementById("log").innerHTML =
             "未发现此成语，请重新输入…";
         } else {
@@ -68,7 +67,17 @@
             chengYu = cnchar.idiom(typeBox[3])[
               randint(0, cnchar.idiom(typeBox[3]).length)
             ];
-            document.getElementById("log").innerHTML = chengYu + "，请输入…";
+            if (chengYu != undefined) {
+              document.getElementById("log").innerHTML = chengYu + "，请输入…";
+              score++;
+              document.getElementById("score").innerHTML = "分数：" + score;
+            } else {
+              document.getElementById("log").innerHTML = "恭喜您获胜！";
+              score++;
+              document.getElementById("score").innerHTML = "分数：" + score;
+              window.confirm("恭喜您获胜！");
+              window.location.reload();
+            }
           } else {
             document.getElementById("log").innerHTML =
               "成语须首尾相接，请重新输入…";
