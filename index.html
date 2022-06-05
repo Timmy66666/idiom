@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <title>成语接龙</title>
+  </head>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #4bc0c8, #c779d0, #feac5e);
+    }
+    .box {
+      height: 80vh;
+      width: 70%;
+      max-width: 600px;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 4px;
+      box-shadow: rgb(0 0 0 / 20%) 0px 2px 1px -1px,
+        rgb(0 0 0 / 14%) 0px 1px 1px 0px, rgb(0 0 0 / 12%) 0px 1px 3px 0px;
+      text-align: center;
+      color: #333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+  </style>
+  <body>
+    <div class="box">
+      <div>
+        <input type="text" placeholder="Hello!" id="typeBox" />
+        <span onclick="type()" style="margin-left: 3px">确定</span>
+      </div>
+      <h1 id="log">请输入…</h1>
+    </div>
+  </body>
+  <script src="https://fastly.jsdelivr.net/npm/cnchar/cnchar.min.js"></script>
+  <script src="https://fastly.jsdelivr.net/npm/cnchar-idiom/cnchar.idiom.min.js"></script>
+  <script>
+    window.onkeydown = function (event) {
+      if (event.keyCode === 13) {
+        type();
+      }
+    };
+    function randint(min, max) {
+      return Math.floor(Math.random() * (max - min)) + min;
+    }
+    let chengYu = "";
+    function type() {
+      let typeBox = document.getElementById("typeBox").value;
+      if (typeBox == "" || typeBox == null || typeBox.length != 4) {
+        document.getElementById("log").innerHTML = "格式错误，请重新输入…";
+      } else {
+        if (
+          cnchar.idiom([typeBox[0], typeBox[1], typeBox[2], typeBox[3]])
+            .length == 0
+        ) {
+          document.getElementById("log").innerHTML =
+            "未发现此成语，请重新输入…";
+        } else {
+          if (chengYu == "" || chengYu[3] == typeBox[0]) {
+            chengYu = cnchar.idiom(typeBox[3])[
+              randint(0, cnchar.idiom(typeBox[3]).length)
+            ];
+            document.getElementById("log").innerHTML = chengYu + "，请输入…";
+          } else {
+            document.getElementById("log").innerHTML =
+              "成语须首尾相接，请重新输入…";
+          }
+        }
+      }
+    }
+  </script>
+</html>
