@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>成语接龙</title>
+    <link rel="icon" href="./favicon.ico" />
   </head>
   <style>
     body {
@@ -33,7 +34,7 @@
   <body>
     <div class="box">
       <div>
-        <input type="text" placeholder="Hello!" id="typeBox" />
+        <input type="text" placeholder="请输入…" id="typeBox" />
         <span onclick="type()" style="margin-left: 3px">确定</span>
       </div>
       <h1 id="log">请输入…</h1>
@@ -74,6 +75,7 @@
           }
         }
       }
+      document.getElementById("typeBox").value = "";
     }
   </script>
 </html>
