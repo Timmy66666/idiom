@@ -52,11 +52,24 @@
     function randint(min, max) {
       return Math.floor(Math.random() * (max - min)) + min;
     }
+    function allChinese(s) {
+      for (let i = 0; i < s.length; i++) {
+        if (s[i] === cnchar.spell(s[i])) {
+          return false;
+        }
+      }
+      return true;
+    }
     let chengYu = "";
     let score = -1;
     function type() {
       let typeBox = document.getElementById("typeBox").value;
-      if (typeBox == "" || typeBox == null || typeBox.length != 4) {
+      if (
+        typeBox == "" ||
+        typeBox == null ||
+        typeBox.length < 4 ||
+        !allChinese(typeBox)
+      ) {
         document.getElementById("log").innerHTML = "格式错误，请重新输入…";
       } else {
         if (cnchar.idiom(typeBox).length == 0) {
